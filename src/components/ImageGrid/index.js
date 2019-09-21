@@ -1,26 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import key from '../../config';
+import { loadImages } from './ImageGridRedux/actions';
 import './styles.scss';
 
 class ImageGrid extends Component {
-  state = {
-		images: [],
-	};
-
 	//Función de React que carga las imagenes al acceder a la página
 	componentDidMount(){
-		fetch(`https://api.unsplash.com/photos/?client_id=${key}&per_page=28`)
-		.then(res => res.json())
-		.then(images => {
-			this.setState({
-				images,
-			});
-		});
+		this.props.loadImages();
 	}
 
 	render() {
-		const { images } = this.state;
+		const { images, error } = this.props;
 		return (
 			<div className = "content">
 				<section className = "content-grid">
@@ -33,7 +23,9 @@ class ImageGrid extends Component {
 								<img src={image.urls.small} alt={image.user.username}></img>
 						</div>
 					))}
+					<button onClick={this.props.loadImages}>Load</button>
 				</section>
+				{error && <div className="error">{JSON.stringify(error)}</div>}
 			</div>
 		) 
 	}
@@ -45,7 +37,11 @@ const mapStateToProps =({ isLoading, images, error })=>({
   error,
 });
 
+const mapDispatchToProps = dispatch => ({
+	loadImages: () => dispatch(loadImages()),
+});
+
 export default connect (
   mapStateToProps,
-  null
+  mapDispatchToProps,
 )(ImageGrid);
