@@ -30,7 +30,7 @@ class ImageGrid extends Component {
 						</div>
 					))}
 				</section>
-				{error && <div className="error">{JSON.stringify(error)}</div>}
+				{error && <div className="error">{"No es posible cargar más imágenes"}</div>}
 				<Button 
 					onClick={()=> !isLoading && loadImages()}
 					loading={isLoading}
