@@ -1,5 +1,6 @@
-import { IMAGES } from './actionTypes';
+import { IMAGES, STATS } from './actionTypes';
 
+// Actions para carga de imágenes
 const loadImages = () => ({
 	type: IMAGES.LOAD,
 });
@@ -14,4 +15,28 @@ const setError = error => ({
 	error,
 });
 
-export { loadImages, setImages, setError };
+// Actions para estadistica de las imagenes
+const loadImagesStats = id =>({
+	type: STATS.LOAD,
+	id,
+})
+
+const setImagesStats = (id, download) =>({
+	type:STATS.LOAD_SUCCESS,
+	id,
+	download,
+})
+
+const setErrorStats = id =>({
+	type: STATS.LOAD_FAIL,
+	id,
+})
+
+export { 
+	loadImages, 
+	setImages, 
+	setError,
+	loadImagesStats, 
+	setImagesStats, 
+	setErrorStats
+};
